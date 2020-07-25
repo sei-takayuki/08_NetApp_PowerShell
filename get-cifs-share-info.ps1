@@ -38,7 +38,7 @@ function Create-Cmd-Cifs-Share()
    Get-Date -Format g >> $outfile3
    $Cifs_Share_Record = Import-Csv $outfile1 -Encoding UTF8
    $Cifs_Share_Record2 = $Cifs_Share_Record | Where-Object {$_.sharename -notmatch "^c\$`$"} | Where-Object {$_.sharename -notmatch "^ETC\$`$"} | Where-Object {$_.sharename -notmatch "^home\$`$"}
-   $Cifs_Share_Record2 | foreach { "vserver cifs share create -vserver aefs23-svm1 -share-name " + $_.sharename + " -path " + $_.path } >> $outfile3
+   $Cifs_Share_Record2 | foreach { "vserver cifs share create -vserver vserver1-svm1 -share-name " + $_.sharename + " -path " + $_.path } >> $outfile3
 
 }
 
@@ -50,7 +50,7 @@ function Create-Cmd-Cifs-Default-Acl-Delete()
    Get-Date -Format g >> $outfile4
    $Cifs_Share_Record = Import-Csv $outfile1 -Encoding UTF8
    $Cifs_Share_Record2 = $Cifs_Share_Record | Where-Object {$_.sharename -notmatch "^c\$`$"} | Where-Object {$_.sharename -notmatch "^ETC\$`$"} | Where-Object {$_.sharename -notmatch "^home\$`$"}
-   $Cifs_Share_Record2 | foreach { "vserver cifs share access-control delete -vserver aefs23-svm1 -share " + $_.sharename + " -user-or-group Everyone" } >> $outfile4
+   $Cifs_Share_Record2 | foreach { "vserver cifs share access-control delete -vserver vserver1-svm1 -share " + $_.sharename + " -user-or-group Everyone" } >> $outfile4
 
 }
 
@@ -61,7 +61,7 @@ function Create-Cmd-Cifs-Acl()
    $logdata5 | out-file $outfile5
    Get-Date -Format g >> $outfile5
    $Cifs_Share_Acl_Record = Import-Csv $outfile2 -Encoding UTF8
-   $Cifs_Share_Acl_Record | foreach { "vserver cifs share access-control create -vserver aefs23-svm1 -share " + $_.sharename + " -user-group-type windows -user-or-group " + "`"" + $_.userorgroup + "`"" + " -permission " + $_.permission } >> $outfile5
+   $Cifs_Share_Acl_Record | foreach { "vserver cifs share access-control create -vserver vserver1-svm1 -share " + $_.sharename + " -user-group-type windows -user-or-group " + "`"" + $_.userorgroup + "`"" + " -permission " + $_.permission } >> $outfile5
 
 }
 
